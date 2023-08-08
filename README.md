@@ -114,17 +114,17 @@ We will define the following variables to include in the formulation:
 
 The model to determine the optimal neighborhood to live in that minimizes the total distance can be solved by:
 
-$\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i$
+$$\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i$$
 ### Budget Constraint
-$\sum_{i=1}^{N} live_i p_i \le lbudget$
+$$\sum_{i=1}^{N} live_i p_i \le lbudget$$
 ### Sum of Liveability Constraint
-$\sum_{i=1}^{N} live_i = 1$
+$$\sum_{i=1}^{N} live_i = 1$$
 
 INSERT DATAFRAME
 
-Here, I set my budget to be my absolute upper limit of **\\$4,000** per month and find the optimal neighborhood to be **Midtown South-Flatiron-Union Square** with a total travel distance of about **100 miles**.
+Here, I set my budget to be my absolute upper limit of **\$4,000** per month and find the optimal neighborhood to be **Midtown South-Flatiron-Union Square** with a total travel distance of about **100 miles**.
 
-However, it could be interesting to see how my budget impacts my total travel distance. If decreasing my budget only slightly increases my travel distance, I would consider decreasing my budget to save money. To observe this, I ran the model numerous times with different values for my rent budget ($lbudget$) and generated a Pareto Optimal Curve. The values of $lbudget$ range from **\\$2500-\\$5000**, since these are the approximate minimum and maximum median studio rental prices.
+However, it could be interesting to see how my budget impacts my total travel distance. If decreasing my budget only slightly increases my travel distance, I would consider decreasing my budget to save money. To observe this, I ran the model numerous times with different values for my rent budget ($lbudget$) and generated a Pareto Optimal Curve. The values of $lbudget$ range from **\$2500-\$5000**, since these are the approximate minimum and maximum median studio rental prices.
 
 INSERT TABLE
 
@@ -132,9 +132,9 @@ INSERT GRAPH
 
 ### Results
 
-When fixing my budget to be the absolute maxiumum I am willing to spend on rent in a given month, my total distance traveled was approximately **100 miles**. The graph above shows after about \\$3,800 (the high end of my budget), there is no benefit to increasing my budget, indicating this is the general solution to minimize total distance optimal. However, there is only a slight difference in distance of approximately 25 miles between a budget of \\$3,800 and a budget of about **\\$3,200**.
+When fixing my budget to be the absolute maximum I am willing to spend on rent in a given month, my total distance traveled was approximately **100 miles**. The graph above shows after about \\$3,800 (the high end of my budget), there is no benefit to increasing my budget, indicating this is the general solution to minimize total distance. However, there is only a slight difference in distance of approximately 25 miles between a budget of \\$3,800 and a budget of about **\$3,200**.
 
-Given that over the course of 3 months I would be saving about **\\$1,800** on rent, I believe traveling an extra 25 miles (which is an overestimate of distance since I may not travel to all locations in a given week) is worth this trade off. Therefore, I solved the model again with the optimal budget value from the graph above. 
+Given that over the course of 3 months I would be saving about **\$1,800** on rent, I believe traveling an extra 25 miles (which is an overestimate of distance since I may not travel to all locations in a given week) is worth this trade-off. Therefore, I solved the model again with the optimal budget value from the graph above. 
 
 
 INSERT FINAL MODEL SOLVE
