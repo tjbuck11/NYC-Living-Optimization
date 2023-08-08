@@ -114,11 +114,11 @@ We will define the following variables to include in the formulation:
 
 The model to determine the optimal neighborhood to live in that minimizes the total distance can be solved by:
 
-\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i
+$$\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i$$
 ### Budget Constraint
-\sum_{i=1}^{N} live_i p_i \le lbudget
+$$\sum_{i=1}^{N} live_i p_i \le lbudget$$
 ### Sum of Liveability Constraint
-\sum_{i=1}^{N} live_i = 1
+$$\sum_{i=1}^{N} live_i = 1$$
 
 INSERT DATAFRAME
 
