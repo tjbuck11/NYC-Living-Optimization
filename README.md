@@ -81,7 +81,7 @@ There are a vast array of neighborhoods in New York, all of which have different
 
 The set of neighborhoods will be denoted by $n$. A visualization of these neighborhoods and the coordinates of each location in $\ell$ can be found below.
 
-INSERT VISUALIZATION
+![Neighborhood Visualization](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/folium_map_1.png)
 
 For each neighborhood, I computed the centroid (center) of the region. This represents the neighborhood while I determine which one is most convenient to live in based on my rent budget. The median per month rent price (in USD) of studio apartments in each neighborhood was obtained from [renthop.com](https://www.renthop.com/average-rent-in/new-york-ny). There were a couple of pecularities with the data which include:
 
@@ -120,15 +120,17 @@ $$\sum_{i=1}^{N} live_i p_i \le lbudget$$
 #### Sum of Liveability Constraint
 $$\sum_{i=1}^{N} live_i = 1$$
 
-INSERT DATAFRAME
+![Initial Neighborhood](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/gams_model_1_output.png)
 
-Here, I set my budget to be my absolute upper limit of **\$4,000** per month and find the optimal neighborhood to be **Midtown South-Flatiron-Union Square** with a total travel distance of about **100 miles**.
+Here, I set my budget to be my absolute upper limit of **\$4,000** per month and find the optimal neighborhood to be **Midtown South-Flatiron-Union Square** with a total travel distance of about **100 miles**. Here is the travel distance to each location:
+
+![Travel Distance by Location](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/distance_table_1.png)
 
 However, it could be interesting to see how my budget impacts my total travel distance. If decreasing my budget only slightly increases my travel distance, I would consider decreasing my budget to save money. To observe this, I ran the model numerous times with different values for my rent budget ($lbudget$) and generated a Pareto Optimal Curve. The values of $lbudget$ range from **\$2500-\$5000**, since these are the approximate minimum and maximum median studio rental prices.
 
-INSERT TABLE
+![Model 1 Iteration Data](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_1_iteration_output.png)
 
-INSERT GRAPH
+![Model 1 Iteration Plot](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_1_iteration_graph.png)
 
 ### Results
 
@@ -136,12 +138,11 @@ When fixing my budget to be the absolute maximum I am willing to spend on rent i
 
 Given that over the course of 3 months I would be saving about **\$1,800** on rent, I believe traveling an extra 25 miles (which is an overestimate of distance since I may not travel to all locations in a given week) is worth this trade-off. Therefore, I solved the model again with the optimal budget value from the graph above. 
 
+![Model 1 Final Solve](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_1_final_output.png)
 
-INSERT FINAL MODEL SOLVE
+![Final Distances Table](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_1_final_distances.png)
 
-INSERT FINAL DISTANCE TABLE
-
-INSERT MAP
+![Model 1 Final Map](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_1_final_graph.png)
 
 The neighborhood with a median studio rental price within the optimal tradeoff budget that minimizes my total travel distance is **Hell's Kitchen**. Above is a visualization of the neighborhood in relation to the locations. 
 
@@ -149,15 +150,15 @@ However, Hell's Kitchen is a large neighborhood, and living in one location with
 
 ## Stage 2: Determining *Where* in the Neighborhood
 
-To determine this, I used a formulation very similar to a sylvester optimization model, where instead of minimizing the radius of the smallest enclosing sphere I minimized the sum of the product of the distance to each location and its relative weight ($w_{\ell}$). The objective of this model is to determine an optimal location within Hell's Kitchen that minimizes the total distance needed to travel. Inherently, this will also minimize my total time and cost of traveling since both time and cost are strictly increasing functions of distance. 
+To determine this, I used a formulation very similar to a Sylvester optimization model, where instead of minimizing the radius of the smallest enclosing sphere I minimized the sum of the product of the distance to each location and its relative weight ($w_{\ell}$). The objective of this model is to determine an optimal location within Hell's Kitchen that minimizes the total distance needed to travel. Inherently, this will also minimize my total time and cost of traveling since both time and cost are strictly increasing functions of distance. 
 
-There will be an additional dataset utilized that contains the $x$ and $y$ ranges for each neighborhood. I denote a set $coordbound$ which contains $xmin, xmax, ymin, ymax$. The parameter $bound_{n,coordbound}$ will hold this data. It must be noted that many regions are oddly shaped and for modeling purposes I took the minimum and maximum $x$ and $y$ coordinates to be the neighborhoods respective bounds. These coordinates are used to bound my optimal location to the neighborhood determined in Stage 1 to ensure the rent price is within my budget.
+There will be an additional dataset utilized that contains the $x$ and $y$ ranges for each neighborhood. I denote a set $coordbound$ which contains $xmin, xmax, ymin, ymax$. The parameter $bound_{n,coordbound}$ will hold this data. It must be noted that many regions are oddly shaped and for modeling purposes, I took the minimum and maximum $x$ and $y$ coordinates to be the neighborhood's respective bounds. These coordinates are used to bound my optimal location to the neighborhood determined in Stage 1 to ensure the rent price is within my budget.
 
 \**Note: Estimating the regions as a rectangle could cause the final location to be slightly outside of the Hell's Kitchen, but close enough that we will assume pricing for apartments still holds.*
 
 ### Formulation
 
-The model takes in a variable which represents the optimal location to live within Hell's Kitchen. It contains a distance calculation to each location in $\ell$. The model then determines the optimal location by minimizing the total distance traveled. A detailed formulation is below.
+The model takes in a variable that represents the optimal location to live within Hell's Kitchen. It contains a distance calculation to each location in $\ell$. The model then determines the optimal location by minimizing the total distance traveled. A detailed formulation is below.
 
 For reference, the formulation involves these aspects of the formulation for the model in Stage 1:
 
@@ -205,19 +206,18 @@ However, this must be reformulated due to the square root within the distance ca
 \text{ where $n$ = Hell's Kitchen}
 \end{align*}
 
-INSERT SOLVE LINE
-INSERT FINAL LOCATION
-INSERT MAP
+![Model 2 Output](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_2_output.png)
+![Final Living Graph](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_2_final_living_graph.png)
 
 ### Results
 
-The model found an optimal solution with geographical coordinates of approximately **40.7546&deg;N, -73.9897&deg;E** (denoted by the red icon above) and my total distance traveled would be approximately **96.35 miles**. The location does appear to be slightly outside of the NYC's government definition of Hell's Kitchen, but this is most likely to due to a combination of estimating the region to be a rectangle as well as some error from converting UTM coordinates to geographical coordinates. Even so, the location is still only half a block outside of the Hell's Kitchen neighborhood. One could simply alter the bounds manually until the point gets is barely within the region, but this is not best practice in general.
+The model found an optimal solution with geographical coordinates of approximately **40.7546&deg;N, -73.9897&deg;E** (denoted by the red icon above) and my total distance traveled would be approximately **96.35 miles**. The location does appear to be slightly outside of NYC's government definition of Hell's Kitchen, but this is most likely due to a combination of estimating the region to be a rectangle as well as some error from converting UTM coordinates to geographical coordinates. Even so, the location is still only half a block outside of the Hell's Kitchen neighborhood. One could simply alter the bounds manually until the point gets is barely within the region, but this is not the best practice in general.
 
 It would also be interesting to see how the distance to each location has improved from the model in Stage 1 (using the centroid) to the model in Stage 2 (using the optimal location). 
 
 INSERT GRAPH
 
-The optimal location decreases the total distance by about **28 miles as well as decreasing the distance to almost every location** (the exceptions will always be present if we deviate any marginal amount from the centroid location). Therefore, solving the 'sylvester-like' model was incredibly useful and will also result in minimizing time and help me get more for my money (since both are strictly increasing functions of distance). 
+The optimal location decreases the total distance by about **28 miles as well as decreasing the distance to almost every location** (the exceptions will always be present if we deviate any marginal amount from the centroid location). Therefore, solving the 'Sylvester-like' model was incredibly useful and will also result in minimizing time and help me get more for my money (since both are strictly increasing functions of distance). 
 
 Now for the fun part. Let's see what is actually at this location! Google shows this to be a commercial building with various stores and some apartments are nearby!
 
@@ -230,7 +230,7 @@ Now for the fun part. Let's see what is actually at this location! Google shows 
 
 ## Stage 3: Determining *how* to get to each Location
 
-As noted in the problem description, I want to get a good idea for how I should travel to each location. An optimization model proves to be useful since there are a **many** different combinations of methods to choose from and doing so by hand is nearly impossible. The model takes in a distance and computes a time and cost to each $\ell$ for every transportation method. It chooses the optimal methods, which is done by implementing a binary variable. The objective of the model is to minimize my total travel time while keeping the cost within my transportation budget. The formulations for cost and time from a given distance in miles are described below.
+As noted in the problem description, I want to get a good idea of how I should travel to each location. An optimization model proves to be useful since there are a **many** different combinations of methods to choose from and doing so by hand is nearly impossible. The model takes in a distance and computes a time and cost to each $\ell$ for every transportation method. It chooses the optimal methods, which is done by implementing a binary variable. The objective of the model is to minimize my total travel time while keeping the cost within my transportation budget. The formulations for cost and time from a given distance in miles are described below.
 
 ### Data
 
@@ -258,7 +258,7 @@ As noted above, the only information I can calculate given the UTM coordinates i
 **Time**: From a dataset about Real-Time Traffic Speed Data found on [data.cityofnewyork.us](https://data.cityofnewyork.us/Transportation/DOT-Traffic-Speeds-NBE/i4gi-tjb9), the median traffic speed for Manhattan is approximately **16.15 miles per hour**. Additionally, due to past experience and New York's reputation, I assume the time between ordering the Uber and its arrival to be about **2 minutes**. Denoting uber speed as $s_{uber}$ and uber wait time as $wait_{uber}$, calculating time in minutes can be determined by solving $$time_{uber} = d_{uber}*(60 /s_{uber} ) + wait_{uber}$$
 
 
-To set this up for the formulation, I denote a set $tran$ that contains all three transportation methods in the order of $walk$, $subway$, $uber$. I represent the parameter used in the formulation below as the initial line and it's corresponding values as the bullets below:
+To set this up for the formulation, I denote a set $tran$ that contains all three transportation methods in the order of $walk$, $subway$, and $uber$. I represent the parameter used in the formulation below as the initial line and its corresponding values as the bullets below:
 
 - $s_{tran}$ : speed
     * $s_{walk} = 3$
@@ -327,28 +327,28 @@ method_{WestMonroe, uber} = 0 \\
 method_{Gym, uber} = 0
 \end{align*}
 
-INSERT SOLVER LINE
-INSERT MAP
+![Model 3 Initial Output](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_output.png)
+![Model 3 Initial Graph](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_graph.png)
 
 It would also be interesting to do a similar analysis to that done in Stage 1 to see how altering my transportation budget impacts my total time traveled. To do so, I solve the model above numerous times with transportation budgets ranging from \$50-$450 (I would never spend \$450 on transportation but let's see how small my travel time can get).
 
-INSERT MODEL OUTPUT
+![Model 3 Iterative Output](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_iterative_output.png)
 
 \**Originally, some of the model statuses were 8 meaning an integer solution was found. To get a global optimal solution, I set the model optcr to be $10^{-8}$ and this tolerance allowed an optimal global solution to be found for all budgets.*
 
-INSERT PLOT
+![Model 3 Iterative Comparison](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_iterative_comparison.png)
 
 The graph above shows that varying budget does show some diminishing returns as the transportation budget gets larger and larger. It isn't your typical Pareto Optimal curve, but it will still help me decide on an optimal budget by finding the budget value where the marginal returns to time begin to become insignificant. 
 
-\**Marginal returns in this case refers to how much time is saved by increasing my budget. Diminishing returns refers to how after a specific threshold (or budget value) my returns become significantly smaller and smaller.*
+\**Marginal returns in this case refer to how much time is saved by increasing my budget. Diminishing returns refers to how after a specific threshold (or budget value) my returns become significantly smaller and smaller.*
 
-INSERT PLOT
+![Model 3 Marginal Graph](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_marginal_graph.png)
 
 The graph is noisy which I assume is due to the model changing methods (which changes total time) each time the budget increases. However, the marginal returns to time start to become significantly smaller at a budget of around **\$160**. One could also argue that \$200 or \$240 could be an optimal budget value due to larger marginal returns relative to local values, but I want to save money so a budget value of **\$160** is used.
 
-INSERT MODEL OUTPUT
+![Model 3 Final Output](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_final_output.png)
 
-INSERT MAP
+![Final Map](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_final_graph.png)
 
 The plot above shows my transportation route to each location. 
 
@@ -360,12 +360,12 @@ With a transportation budget of **\\$160**, my total traveling time would be app
 
 ## Conclusion
 
-To decide the optimal location to live and transportation methods within Manhattan, I approached the problem with a hierachical goal programming approach.
+To decide the optimal location to live and transportation methods within Manhattan, I approached the problem with a hierarchical goal programming approach.
 
 The first stage determined the optimal neighborhood for me to live in, where the model originally chose Midtown South-Flatiron-Union Square with a total distance of about 100 miles. However, conducting sensitivity analysis on the total distance by changing my budget offered a different solution of **Hell's Kitchen** as the optimal neighborhood (in my situation). In comparison to Midtown South, Hell's Kitchen only increases total distance by about 25 miles but saves me about **\$2,000** over the course of the summer. 
 
-The second stage determined my the optimal location to live within the Hell's Kitchen neighborhood. I formulated a quadratically constrained optimization problem similar to a sylvester model, where the objective was to minimize the sum of the product of the weights and distance to each location ($\sum_{i=1}^{L} w_i d_i$). The model determined the optimal location to be **40.7546&deg;N, -73.9897&deg;E** with a total distance of about **96.35 miles**. This turned out to be a corporate building, but there were numerous apartment buildings within half a block of these coordinates. I then examined the difference between this distance value and the objective value and distances from Stage 1 and found the optimal location decreased total travel distance by about 28 miles and decreased distance to the vast majority of locations (including my girlfriend's work which was a bonus).
+The second stage determined my optimal location to live within the Hell's Kitchen neighborhood. I formulated a quadratically constrained optimization problem similar to a Sylvester model, where the objective was to minimize the sum of the product of the weights and distance to each location ($\sum_{i=1}^{L} w_i d_i$). The model determined the optimal location to be **40.7546&deg;N, -73.9897&deg;E** with a total distance of about **96.35 miles**. This turned out to be a corporate building, but there were numerous apartment buildings within half a block of these coordinates. I then examined the difference between this distance value and the objective value and distances from Stage 1 and found the optimal location decreased total travel distance by about 28 miles and decreased distance to the vast majority of locations (including my girlfriend's work which was a bonus).
 
-The final stage determined the optimal way to get to each location while minimizing time and staying within my budget. With the original budget of about \\$250, the model determined an total travel time of about 717 minutes, or 11 hours and 57 minutes. Doing a similar sensitivity analysis to Stage 1, I determined an budget of \\$160 would be best since I want to minimize my cost and the marginal returns to time became increasingly stagnant after this value. Due to feasibility regions, I used introduced my tolerance level to find an optimal global solution of about **846 minutes**, or **14 hours and 6 minutes** (this is on the extreme high end because as referenced earlier, I won't travel to all locations in a given week at the corresponding weight). By conducting this analysis, I am able to save approximately **\\$900** over the summer while only traveling (at most) an additional 2 hours per week. 
+The final stage determined the optimal way to get to each location while minimizing time and staying within my budget. With the original budget of about \\$250, the model determined a total travel time of about 717 minutes, or 11 hours and 57 minutes. Doing a similar sensitivity analysis to Stage 1, I determined a budget of \\$160 would be best since I want to minimize my cost, and the marginal returns to time became increasingly stagnant after this value. Due to feasibility regions, I used introduced my tolerance level to find an optimal global solution of about **846 minutes**, or **14 hours and 6 minutes** (this is on the extreme high end because as referenced earlier, I won't travel to all locations in a given week at the corresponding weight). By conducting this analysis, I am able to save approximately **\\$900** over the summer while only traveling (at most) an additional 2 hours per week. 
 
-Overall, using optimization models solve this problem helped me determine a good monthly budget estimate for rent (\\$3,160 per month for Hell's Kitchen) and transportation costs (\\$160 x 4 weeks) of **\\$3,800** while saving countless hours of calculations. This is a great start to planning my budget and gave insights into how I should start saving. Solving the problem in a three stage setup ensured all of my own constraints and objectives were met while still finding useful optimal solutions at each stage. By collecting the right data, this process could be done for a variety of different locations but Stage 3 worked particularly well for Manhattan due to the massive subway system and my own choice to not bring a car.
+Overall, using optimization models to solve this problem helped me determine a good monthly budget estimate for rent (\\$3,160 per month for Hell's Kitchen) and transportation costs (\\$160 x 4 weeks) of **\\$3,800** while saving countless hours of calculations. This is a great start to planning my budget and gave insights into how I should start saving. Solving the problem in a three-stage setup ensured all of my own constraints and objectives were met while still finding useful optimal solutions at each stage. By collecting the right data, this process could be done for a variety of different locations but Stage 3 worked particularly well for Manhattan due to the massive subway system and my own choice to not bring a car.
