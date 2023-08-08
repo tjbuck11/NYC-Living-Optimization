@@ -176,7 +176,6 @@ The Sylvester-like model to find an optimal place to live that minimizes total d
 $$
 \min_{w_{\ell}, d_\ell} \left( \sum_{i=1}^{L} w_i d_i\right)
 $$
-
 where:
 
 $$
@@ -197,14 +196,13 @@ Where $n$ = Hell's Kitchen
 
 However, this must be reformulated due to the square root within the distance calculation, which will cause GAMS to throw an error. Therefore, the problem can be reformulated as
 
-\begin{align*}
-\min_{w_{\ell},d_\ell} & \left( \sum_{i=1}^{L} w_i d_i\right) \\ 
-\text{where  } & d_\ell^2 = (home_{x} - data_{\ell x})^2 + (home_{y} - data_{\ell y})^2\\
-\text{subject to}\\
-& bound_{n, xmin} \le home_x \le bound_{n,xmax}\\
-& bound_{n, ymin} \le home_y \le bound_{n,ymax}\\ 
-\text{ where $n$ = Hell's Kitchen}
-\end{align*}
+$$\min_{w_{\ell},d_\ell} \left( \sum_{i=1}^{L} w_i d_i\right)$$
+where: 
+$$d_\ell^2 = (home_{x} - data_{\ell x})^2 + (home_{y} - data_{\ell y})^2$$
+subject to
+$$bound_{n, xmin} \le home_x \le bound_{n,xmax}$$
+$$bound_{n, ymin} \le home_y \le bound_{n,ymax}$$
+where $n$ = Hell's Kitchen
 
 ![Model 2 Output](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_2_output.png)
 ![Final Living Graph](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_2_final_living_graph.png)
@@ -215,7 +213,7 @@ The model found an optimal solution with geographical coordinates of approximate
 
 It would also be interesting to see how the distance to each location has improved from the model in Stage 1 (using the centroid) to the model in Stage 2 (using the optimal location). 
 
-INSERT GRAPH
+![Model 1 vs Model 2 Comparison](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_comparison_graph.png)
 
 The optimal location decreases the total distance by about **28 miles as well as decreasing the distance to almost every location** (the exceptions will always be present if we deviate any marginal amount from the centroid location). Therefore, solving the 'Sylvester-like' model was incredibly useful and will also result in minimizing time and help me get more for my money (since both are strictly increasing functions of distance). 
 
@@ -243,11 +241,11 @@ As noted above, the only information I can calculate given the UTM coordinates i
 
 #### <u>Walking</u>
 
-**Cost**: There is no need to determine a cost for walking since it is always free (often just inconvenient or tiresome). Therefore, the cost for walking is **0**. $$cost_{walk} = 0$$\
+**Cost**: There is no need to determine a cost for walking since it is always free (often just inconvenient or tiresome). Therefore, the cost of walking is **0**. $$cost_{walk} = 0$$\
 **Time**: At the gym, I frequently walk at a pace of 3.5 miles per hour on a treadmill, but this speed feels slightly faster than my casual walking speed. Based on this, I assume my walking pace to be 3 miles per hour. Denoting my walking speed as $s_{walk}$ and distance to walk as $d_{walk}$, calculating time in minutes can be determined by solving $$time_{walk} = d_{walk}*(60 / s_{walk} )$$
 
 #### <u>The Subway</u>
-**Cost**: Based on the information from the Metropolitan Transportation Authority found at [mta.info](https://new.mta.info/fares), a subway ticket for a one way ride is **\$2.75**. The cost to ride the subway does not depend on distance and can be denoted as: $$cost_{subway} = 2.75$$
+**Cost**: Based on the information from the Metropolitan Transportation Authority found at [mta.info](https://new.mta.info/fares), a subway ticket for a one-way ride is **\$2.75**. The cost to ride the subway does not depend on the distance and can be denoted as: $$cost_{subway} = 2.75$$
 
 **Time**: According to [NYTimes](https://www.nytimes.com/2018/12/10/nyregion/new-york-subway-delay.html), a transportation report conducted in 2010 found the average NYC subway travels at a speed of **17 miles per hour**. Additionally, I assume walking to and waiting for the subway takes approximately 5 minutes (since there are smaller subway stations scattered all throughout New York). Denoting subway waiting time as $wait_{subway}$, subway speed as $s_{subway}$, and distance to ride the subway as $d_{subway}$, calculating time in minutes can be determined by solving $$time_{subway} = wait_{subway} + d_{subway}*(60 / s_{subway} )$$
 
