@@ -38,13 +38,13 @@ The data for this project was generated through google map searches to find loca
 
 Each location's geographic coordinates are converted to UTM coordinates (which closely model cartesian coordinates) with miles as the units. The Euclidean distance formulation between two UTM coordinates is an accurate approximation for the true distance over small areas (distances less than 100 km) and since the data is clustered around Manhattan, using Euclidean distance to approximate the true distance between two points is supported. 
 
-Locations are represented by a set denoted by $ \ell $ and the coordinates are denoted as a set $x, y$ where $x$ and $y$ are the corresponding Easting and Northing UTM coordinates, respectively. Additionally, let the parameter $data_{\ell xy}$ refer to the coordinates for each location.
+Locations are represented by a set denoted by $\ell$ and the coordinates are denoted as a set $x, y$ where $x$ and $y$ are the corresponding Easting and Northing UTM coordinates, respectively. Additionally, let the parameter $data_{\ell xy}$ refer to the coordinates for each location.
 
-Additionally, each location has a relative weight associated with it. This value is assigned entirely by the modeler who must determine which locations are most important to them. I constructed these weights by thinking about my frequency of travel to the specific location in a given week and my own priority of the location (I also partially considered my girlfriends priorities). Not all locations will be traveled to in a given week or at that frequency, so the final distances (in miles) given by the models should not be taken at face value. However, I want to include all of these locations to ensure I am as close as possible to anything I may need while in Manhattan. The weights are denoted as a parameter referred to as $ w_\ell $. Traveling to a location entails traveling back to where I live, so the weights take this into account.
+Additionally, each location has a relative weight associated with it. This value is assigned entirely by the modeler who must determine which locations are most important to them. I constructed these weights by thinking about my frequency of travel to the specific location in a given week and my own priority of the location (I also partially considered my girlfriends priorities). Not all locations will be traveled to in a given week or at that frequency, so the final distances (in miles) given by the models should not be taken at face value. However, I want to include all of these locations to ensure I am as close as possible to anything I may need while in Manhattan. The weights are denoted as a parameter referred to as $w_\ell$. Traveling to a location entails traveling back to where I live, so the weights take this into account.
 
 Therefore, all locations were assigned a **weight of 2** except for the ones noted below:
 
-- Work 5 days in person each week : $w_{west\:monroe}$ **= 10** 
+- Work 5 days in person each week : $w_{west\-monroe}$ **= 10** 
 - Partial priority to my girlfriends workplace : $w_{citi}$ **= 6**
 - Travel to a Target an average of 2 times per week: $w_{targets_{123}}$ = **4**
 - Workout 5 days per week : $w_{gym}$ **= 10**
@@ -114,13 +114,11 @@ We will define the following variables to include in the formulation:
 
 The model to determine the optimal neighborhood to live in that minimizes the total distance can be solved by:
 
-\begin{align*}
-\min_{w_\ell, d_{n\ell}, live_n } & \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i \\ 
-\text{subject to } & \sum_{i=1}^{N} live_i p_i \le lbudget\\
-& \sum_{i=1}^{N} live_i = 1\\
-\text{and distances from a neighborhood $n$ to each locations (without accounting weights) is:}\\
-& distance_{n \ell} = dist_{n\ell} live_n \text{for $n=1,\ldots,N$}
-\end{align*}
+\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i
+### Budget Constraint
+\sum_{i=1}^{N} live_i p_i \le lbudget
+### Sum of Liveability Constraint
+\sum_{i=1}^{N} live_i = 1
 
 INSERT DATAFRAME
 
