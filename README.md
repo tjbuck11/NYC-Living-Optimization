@@ -105,7 +105,7 @@ For reference, we have the following:
 
 First, we will compute the distance between each neighborhood (represented by the regions centroid) and all locations using the Euclidean Distance formulation. Let the distance between a neighborhood and a location be denoted as $d_{n\ell}$. The formula used to calculate the distance (in miles) for a neighborhood $n$ to all locations $\ell$ using the representations above is:
 
-$$dist_{n\ell} = \sqrt{(c_{n x} - data_{\ell x})^2 + (c_{ny} - data_{\ell y})^2}\:\:\:\:\:for\:\ell=1,\ldots,L$$
+$$dist_{n\ell} = \sqrt{(c_{n x} - data_{\ell x})^2 + (c_{ny} - data_{\ell y})^2} for\:\ell=1,\ldots,L$$
 
 We will define the following variables to include in the formulation:
 - $live_n$ : a binary variable, determines if I live in the neighborhood
@@ -114,11 +114,11 @@ We will define the following variables to include in the formulation:
 
 The model to determine the optimal neighborhood to live in that minimizes the total distance can be solved by:
 
-$$\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i$$
+$\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i$
 ### Budget Constraint
-$$\sum_{i=1}^{N} live_i p_i \le lbudget$$
+$\sum_{i=1}^{N} live_i p_i \le lbudget$
 ### Sum of Liveability Constraint
-$$\sum_{i=1}^{N} live_i = 1$$
+$\sum_{i=1}^{N} live_i = 1$
 
 INSERT DATAFRAME
 
