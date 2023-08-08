@@ -173,9 +173,7 @@ I also define the following variable:
 
 The Sylvester-like model to find an optimal place to live that minimizes total distance traveled can be solved by:
 
-$$
-\min_{w_{\ell}, d_\ell} \left( \sum_{i=1}^{L} w_i d_i\right)
-$$
+$$\min_{w_{\ell}, d_\ell} \left( \sum_{i=1}^{L} w_i d_i\right)$$
 where:
 
 $$
