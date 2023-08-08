@@ -1,6 +1,7 @@
 # Where to Live in NYC
 ### Optimization Project by Thomas Buck
-
+The following project was coded using GAMS (Generic Algebraic Modeling System) and Python.
+The package installs and imports are completed within the notebook.
 
 ## Project Description
 
