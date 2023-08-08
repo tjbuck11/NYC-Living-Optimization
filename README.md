@@ -170,9 +170,33 @@ I also define the following variable:
 
 - $home_{xy}$ : Optimal coordinates for my place of residence
 
-The sylvester like model to find an optimal place to live that minimizes total distance traveled can the be solved by:
+The Sylvester-like model to find an optimal place to live that minimizes total distance traveled can be solved by:
 
-$$\min_{w_{\ell}, d_\ell} & \left( \sum_{i=1}^{L} w_i d_i\right) \\ 
+$$
+\min_{w_{\ell}, d_\ell} \left( \sum_{i=1}^{L} w_i d_i\right)
+$$
+
+where:
+
+$$
+d_\ell = \sqrt{(home_{x} - data_{\ell x})^2 + (home_{y} - data_{\ell y})^2}
+$$
+
+### X-Coordinate Bound
+
+$$
+bound_{n, xmin} \le home_x \le bound_{n,xmax}
+$$
+
+### Y-Coordinate Bound
+
+$$
+bound_{n, ymin} \le home_y \le bound_{n,ymax}
+$$
+
+Where $n$ = Hell's Kitchen
+
+$$\min_{w_{\ell}, d_\ell} \left( \sum_{i=1}^{L} w_i d_i\right)$$ \\ 
 \text{where  } & d_\ell = \sqrt{(home_{x} - data_{\ell x})^2 + (home_{y} - data_{\ell y})^2}\\
 \text{subject to}\\
 & bound_{n, xmin} \le home_x \le bound_{n,xmax}\\
