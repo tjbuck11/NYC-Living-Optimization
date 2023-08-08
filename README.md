@@ -307,23 +307,19 @@ I also define the following variables:
 
 The model to determine the optimal location that minimizes my total transportation costs and time can be solved by:
 
-\begin{align*}
-\min_{t_\ell} & \left( \sum_{i=1}^{L} w_i t_i\right) \\ 
-& \\
-\text{subject to}\\
-& \sum_{j=1}^{T} method_{\ell j} = 1  \text{  for $\ell=1,\ldots,L$}\\
-& \sum_{i=1}^{L} c_i \le tbudget\\
-\text{where $d_{\ell}$ are the distance values determined in Stage 2 and }\\
-& c_\ell = w_{\ell} \sum_{j=1}^{T} method_{\ell j}*(base_j + d_\ell*dfare_j) \text{  for $\ell=1,\ldots,L$}\\
-& t_\ell = \sum_{j=1}^{T} method_{\ell j} * (wait_j + d_{\ell}*(60/s_j)) \text{  for $\ell=1,\ldots,L$}\\
-\end{align*}
+$$\min_{t_\ell} \left( \sum_{i=1}^{L} w_i t_i\right)$$ 
+
+subject to
+$$\sum_{j=1}^{T} method_{\ell j} = 1$$  for $\ell=1,\ldots,L$
+$$\sum_{i=1}^{L} c_i \le tbudget$$
+where $d_{\ell}$ are the distance values determined in Stage 2 and
+$$c_\ell = w_{\ell} \sum_{j=1}^{T} method_{\ell j}*(base_j + d_\ell*dfare_j)$$ for $\ell=1,\ldots,L$
+$$t_\ell = \sum_{j=1}^{T} method_{\ell j} * (wait_j + d_{\ell}*(60/s_j))$$ for $\ell=1,\ldots,L$
 
 Additionally, I fix some values to say I must take a certain transportation method due to feasibility. I indicate to the model that I must either walk or subway to both the my work and the gym, since I would never take an Uber to these locations every single day.
 
-\begin{align*}
-method_{WestMonroe, uber} = 0 \\
-method_{Gym, uber} = 0
-\end{align*}
+$$method_{WestMonroe, uber} = 0$$
+$$method_{Gym, uber} = 0$$
 
 ![Model 3 Initial Output](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_output.png)
 ![Model 3 Initial Graph](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/model_3_graph.png)
