@@ -115,9 +115,9 @@ We will define the following variables to include in the formulation:
 The model to determine the optimal neighborhood to live in that minimizes the total distance can be solved by:
 
 $$\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i$$
-### Budget Constraint
+#### Budget Constraint
 $$\sum_{i=1}^{N} live_i p_i \le lbudget$$
-### Sum of Liveability Constraint
+#### Sum of Liveability Constraint
 $$\sum_{i=1}^{N} live_i = 1$$
 
 INSERT DATAFRAME
@@ -182,26 +182,17 @@ $$
 d_\ell = \sqrt{(home_{x} - data_{\ell x})^2 + (home_{y} - data_{\ell y})^2}
 $$
 
-### X-Coordinate Bound
-
+#### X-Coordinate Bound
 $$
 bound_{n, xmin} \le home_x \le bound_{n,xmax}
 $$
 
-### Y-Coordinate Bound
-
+#### Y-Coordinate Bound
 $$
 bound_{n, ymin} \le home_y \le bound_{n,ymax}
 $$
 
 Where $n$ = Hell's Kitchen
-
-$$\min_{w_{\ell}, d_\ell} \left( \sum_{i=1}^{L} w_i d_i\right)$$ \\ 
-\text{where  } & d_\ell = \sqrt{(home_{x} - data_{\ell x})^2 + (home_{y} - data_{\ell y})^2}\\
-\text{subject to}\\
-& bound_{n, xmin} \le home_x \le bound_{n,xmax}\\
-& bound_{n, ymin} \le home_y \le bound_{n,ymax}\\ 
-\text{ where $n$ = Hell's Kitchen}$$
 
 However, this must be reformulated due to the square root within the distance calculation, which will cause GAMS to throw an error. Therefore, the problem can be reformulated as
 
