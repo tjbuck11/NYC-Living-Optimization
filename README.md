@@ -313,7 +313,7 @@ $$\sum_{i=1}^{L} c_i \le tbudget$$
 where $d_{\ell}$ are the distance values determined in Stage 2 and
 ```math
 c_\ell = w_{\ell} \sum_{j=1}^{T} method_{\ell j}*(base_j + d_\ell*dfare_j)
-```math 
+```
 for $\ell=1,\ldots,L$
 $$t_\ell = \sum_{j=1}^{T} method_{\ell j} * (wait_j + d_{\ell}*(60/s_j))$$ for $\ell=1,\ldots,L$
 
