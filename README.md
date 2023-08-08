@@ -223,7 +223,7 @@ Now for the fun part. Let's see what is actually at this location! Google shows 
 
 [Google Maps Link](https://www.google.com/maps/search/apartments/@40.7545696,-73.990761,18z/data=!4m7!2m6!3m5!1sapartments!2s40.7545925,-73.9896566!4m2!1d-73.9896566!2d40.7545925)
 
-| ![image-2.png](Images/image-2.png)| ![image-5.png](attachment:image-5.png)  |
+| ![image-2.png](https://github.com/tjbuck11/NYC-Living-Optimization/blob/main/Images/image-2.png?raw=true)| ![image-5.png](attachment:image-5.png)  |
 |-|-|
 | ![image-3.png](attachment:image-3.png) |
 
