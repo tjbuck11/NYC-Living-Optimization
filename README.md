@@ -132,7 +132,7 @@ INSERT GRAPH
 
 ### Results
 
-When fixing my budget to be the absolute maximum I am willing to spend on rent in a given month, my total distance traveled was approximately **100 miles**. The graph above shows after about \$3,800 (the high end of my budget), there is no benefit to increasing my budget, indicating this is the general solution to minimize total distance. However, there is only a slight difference in distance of approximately 25 miles between a budget of \\$3,800 and a budget of about **\$3,200**.
+When fixing my budget to be the absolute maximum I am willing to spend on rent in a given month, my total distance traveled was approximately **100 miles**. The graph above shows after about \$3,800 (the high end of my budget), there is no benefit to increasing my budget, indicating this is the general solution to minimize total distance. However, there is only a slight difference in distance of approximately 25 miles between a budget of \$3,800 and a budget of about **\$3,200**.
 
 Given that over the course of 3 months I would be saving about **\$1,800** on rent, I believe traveling an extra 25 miles (which is an overestimate of distance since I may not travel to all locations in a given week) is worth this trade-off. Therefore, I solved the model again with the optimal budget value from the graph above. 
 
