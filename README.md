@@ -309,7 +309,7 @@ $$\min_{t_\ell} \left( \sum_{i=1}^{L} w_i t_i\right)$$
 
 subject to\
 $$\sum_{j=1}^{T} method_{\ell j} = 1$$ for $\ell=1,\ldots,L$
-$$\sum_{i=1}^{L} c_i \le tbudget$$ where $d_{\ell}$ are the distance values determined in Stage 2 and
+$$\sum_{i=1}^{L} c_i \le tbudget$$ where $d_{\ell}$ are the distance values determined in Stage 2 and\
 $$c_\ell = w_{\ell} \sum_{j=1}^{T} method_{\ell j}*(base_j + d_\ell*dfare_j)$$ for $\ell=1,\ldots,L$
 $$t_\ell = \sum_{j=1}^{T} method_{\ell j} * (wait_j + d_{\ell}*(60/s_j))$$ for $\ell=1,\ldots,L$
 
