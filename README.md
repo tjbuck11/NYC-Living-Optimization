@@ -320,7 +320,10 @@ $$t_\ell = \sum_{j=1}^{T} method_{\ell j} * (wait_j + d_{\ell}*(60/s_j))$$ for $
 Additionally, I fix some values to say I must take a certain transportation method due to feasibility. I indicate to the model that I must either walk or subway to both the my work and the gym, since I would never take an Uber to these locations every single day.
 
 $$
-method_{WestMonroe, uber} = 0\
+method_{WestMonroe, uber} = 0
+$$
+
+$$
 method_{Gym, uber} = 0
 $$
 
