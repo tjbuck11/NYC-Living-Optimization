@@ -38,13 +38,13 @@ The data for this project was generated through google map searches to find loca
 
 Each location's geographic coordinates are converted to UTM coordinates (which closely model cartesian coordinates) with miles as the units. The Euclidean distance formulation between two UTM coordinates is an accurate approximation for the true distance over small areas (distances less than 100 km) and since the data is clustered around Manhattan, using Euclidean distance to approximate the true distance between two points is supported. 
 
-Locations are represented by a set denoted by $ \ell $ and the coordinates are denoted as a set $x, y$ where $x$ and $y$ are the corresponding Easting and Northing UTM coordinates, respectively. Additionally, let the parameter $data_{\ell xy}$ refer to the coordinates for each location.
+Locations are represented by a set denoted by $\ell$ and the coordinates are denoted as a set $x, y$ where $x$ and $y$ are the corresponding Easting and Northing UTM coordinates, respectively. Additionally, let the parameter $data_{\ell xy}$ refer to the coordinates for each location.
 
-Additionally, each location has a relative weight associated with it. This value is assigned entirely by the modeler who must determine which locations are most important to them. I constructed these weights by thinking about my frequency of travel to the specific location in a given week and my own priority of the location (I also partially considered my girlfriends priorities). Not all locations will be traveled to in a given week or at that frequency, so the final distances (in miles) given by the models should not be taken at face value. However, I want to include all of these locations to ensure I am as close as possible to anything I may need while in Manhattan. The weights are denoted as a parameter referred to as $ w_\ell $. Traveling to a location entails traveling back to where I live, so the weights take this into account.
+Additionally, each location has a relative weight associated with it. This value is assigned entirely by the modeler who must determine which locations are most important to them. I constructed these weights by thinking about my frequency of travel to the specific location in a given week and my own priority of the location (I also partially considered my girlfriends priorities). Not all locations will be traveled to in a given week or at that frequency, so the final distances (in miles) given by the models should not be taken at face value. However, I want to include all of these locations to ensure I am as close as possible to anything I may need while in Manhattan. The weights are denoted as a parameter referred to as $w_\ell$. Traveling to a location entails traveling back to where I live, so the weights take this into account.
 
 Therefore, all locations were assigned a **weight of 2** except for the ones noted below:
 
-- Work 5 days in person each week : $w_{west\:monroe}$ **= 10** 
+- Work 5 days in person each week : $w_{west\-monroe}$ **= 10** 
 - Partial priority to my girlfriends workplace : $w_{citi}$ **= 6**
 - Travel to a Target an average of 2 times per week: $w_{targets_{123}}$ = **4**
 - Workout 5 days per week : $w_{gym}$ **= 10**
@@ -105,7 +105,7 @@ For reference, we have the following:
 
 First, we will compute the distance between each neighborhood (represented by the regions centroid) and all locations using the Euclidean Distance formulation. Let the distance between a neighborhood and a location be denoted as $d_{n\ell}$. The formula used to calculate the distance (in miles) for a neighborhood $n$ to all locations $\ell$ using the representations above is:
 
-$$dist_{n\ell} = \sqrt{(c_{n x} - data_{\ell x})^2 + (c_{ny} - data_{\ell y})^2}\:\:\:\:\:for\:\ell=1,\ldots,L$$
+$$dist_{n\ell} = \sqrt{(c_{n x} - data_{\ell x})^2 + (c_{ny} - data_{\ell y})^2} for\:\ell=1,\ldots,L$$
 
 We will define the following variables to include in the formulation:
 - $live_n$ : a binary variable, determines if I live in the neighborhood
@@ -114,19 +114,17 @@ We will define the following variables to include in the formulation:
 
 The model to determine the optimal neighborhood to live in that minimizes the total distance can be solved by:
 
-\begin{align*}
-\min_{w_\ell, d_{n\ell}, live_n } & \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i \\ 
-\text{subject to } & \sum_{i=1}^{N} live_i p_i \le lbudget\\
-& \sum_{i=1}^{N} live_i = 1\\
-\text{and distances from a neighborhood $n$ to each locations (without accounting weights) is:}\\
-& distance_{n \ell} = dist_{n\ell} live_n \text{for $n=1,\ldots,N$}
-\end{align*}
+$$\min_{w_\ell, d_{n\ell}, live_n } \sum_{i=1}^{N} \sum_{j=1}^{L} w_j dist_{ij} live_i$$
+#### Budget Constraint
+$$\sum_{i=1}^{N} live_i p_i \le lbudget$$
+#### Sum of Liveability Constraint
+$$\sum_{i=1}^{N} live_i = 1$$
 
 INSERT DATAFRAME
 
-Here, I set my budget to be my absolute upper limit of **\\$4,000** per month and find the optimal neighborhood to be **Midtown South-Flatiron-Union Square** with a total travel distance of about **100 miles**.
+Here, I set my budget to be my absolute upper limit of **\$4,000** per month and find the optimal neighborhood to be **Midtown South-Flatiron-Union Square** with a total travel distance of about **100 miles**.
 
-However, it could be interesting to see how my budget impacts my total travel distance. If decreasing my budget only slightly increases my travel distance, I would consider decreasing my budget to save money. To observe this, I ran the model numerous times with different values for my rent budget ($lbudget$) and generated a Pareto Optimal Curve. The values of $lbudget$ range from **\\$2500-\\$5000**, since these are the approximate minimum and maximum median studio rental prices.
+However, it could be interesting to see how my budget impacts my total travel distance. If decreasing my budget only slightly increases my travel distance, I would consider decreasing my budget to save money. To observe this, I ran the model numerous times with different values for my rent budget ($lbudget$) and generated a Pareto Optimal Curve. The values of $lbudget$ range from **\$2500-\$5000**, since these are the approximate minimum and maximum median studio rental prices.
 
 INSERT TABLE
 
@@ -134,9 +132,9 @@ INSERT GRAPH
 
 ### Results
 
-When fixing my budget to be the absolute maxiumum I am willing to spend on rent in a given month, my total distance traveled was approximately **100 miles**. The graph above shows after about \\$3,800 (the high end of my budget), there is no benefit to increasing my budget, indicating this is the general solution to minimize total distance optimal. However, there is only a slight difference in distance of approximately 25 miles between a budget of \\$3,800 and a budget of about **\\$3,200**.
+When fixing my budget to be the absolute maximum I am willing to spend on rent in a given month, my total distance traveled was approximately **100 miles**. The graph above shows after about \$3,800 (the high end of my budget), there is no benefit to increasing my budget, indicating this is the general solution to minimize total distance. However, there is only a slight difference in distance of approximately 25 miles between a budget of \$3,800 and a budget of about **\$3,200**.
 
-Given that over the course of 3 months I would be saving about **\\$1,800** on rent, I believe traveling an extra 25 miles (which is an overestimate of distance since I may not travel to all locations in a given week) is worth this trade off. Therefore, I solved the model again with the optimal budget value from the graph above. 
+Given that over the course of 3 months I would be saving about **\$1,800** on rent, I believe traveling an extra 25 miles (which is an overestimate of distance since I may not travel to all locations in a given week) is worth this trade-off. Therefore, I solved the model again with the optimal budget value from the graph above. 
 
 
 INSERT FINAL MODEL SOLVE
@@ -172,15 +170,29 @@ I also define the following variable:
 
 - $home_{xy}$ : Optimal coordinates for my place of residence
 
-The sylvester like model to find an optimal place to live that minimizes total distance traveled can the be solved by:
-\begin{align*}
-\min_{w_{\ell}, d_\ell} & \left( \sum_{i=1}^{L} w_i d_i\right) \\ 
-\text{where  } & d_\ell = \sqrt{(home_{x} - data_{\ell x})^2 + (home_{y} - data_{\ell y})^2}\\
-\text{subject to}\\
-& bound_{n, xmin} \le home_x \le bound_{n,xmax}\\
-& bound_{n, ymin} \le home_y \le bound_{n,ymax}\\ 
-\text{ where $n$ = Hell's Kitchen}
-\end{align*}
+The Sylvester-like model to find an optimal place to live that minimizes total distance traveled can be solved by:
+
+$$
+\min_{w_{\ell}, d_\ell} \left( \sum_{i=1}^{L} w_i d_i\right)
+$$
+
+where:
+
+$$
+d_\ell = \sqrt{(home_{x} - data_{\ell x})^2 + (home_{y} - data_{\ell y})^2}
+$$
+
+#### X-Coordinate Bound
+$$
+bound_{n, xmin} \le home_x \le bound_{n,xmax}
+$$
+
+#### Y-Coordinate Bound
+$$
+bound_{n, ymin} \le home_y \le bound_{n,ymax}
+$$
+
+Where $n$ = Hell's Kitchen
 
 However, this must be reformulated due to the square root within the distance calculation, which will cause GAMS to throw an error. Therefore, the problem can be reformulated as
 
