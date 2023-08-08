@@ -44,7 +44,7 @@ Additionally, each location has a relative weight associated with it. This value
 
 Therefore, all locations were assigned a **weight of 2** except for the ones noted below:
 
-- Work 5 days in person each week : $w_{west\-monroe}$ **= 10** 
+- Work 5 days in person each week : $w_{WestMonroe}$ **= 10** 
 - Partial priority to my girlfriends workplace : $w_{citi}$ **= 6**
 - Travel to a Target an average of 2 times per week: $w_{targets_{123}}$ = **4**
 - Workout 5 days per week : $w_{gym}$ **= 10**
@@ -311,7 +311,10 @@ subject to\
 $$\sum_{j=1}^{T} method_{\ell j} = 1$$ for $\ell=1,\ldots,L$
 $$\sum_{i=1}^{L} c_i \le tbudget$$ 
 where $d_{\ell}$ are the distance values determined in Stage 2 and
-$$c_\ell = w_{\ell} \sum_{j=1}^{T} method_{\ell j}*(base_j + d_\ell*dfare_j)$$ for $\ell=1,\ldots,L$
+``math
+c_\ell = w_{\ell} \sum_{j=1}^{T} method_{\ell j}*(base_j + d_\ell*dfare_j)
+``math 
+for $\ell=1,\ldots,L$
 $$t_\ell = \sum_{j=1}^{T} method_{\ell j} * (wait_j + d_{\ell}*(60/s_j))$$ for $\ell=1,\ldots,L$
 
 Additionally, I fix some values to say I must take a certain transportation method due to feasibility. I indicate to the model that I must either walk or subway to both the my work and the gym, since I would never take an Uber to these locations every single day.
